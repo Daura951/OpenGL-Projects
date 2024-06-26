@@ -1,0 +1,129 @@
+Conservation of energy: Out going light energy should never exceed the incoming ligh energy. For example, as 
+roughness decreases, the area at which specular occurs, increases, BUT the brightness decreases, thus conserving
+energy. This is why smooth surfaces have more pronounced specular highlights than rough surfaces.
+
+reflectance equation:  measures the reflected sum of the lights' irradiance (all light rays) within a hemisphere Ω centered at
+point p, as viewed from ωo.
+
+Lo(p,ωo)=∫Ωfr(p,ωi,ωo)Li(p,ωi)n⋅ωidωi
+
+Lo(p, ωo) = sum of reflected light of all incoming directions ωi in a hemisphere Ω centered at p, as viewed from ωo
+∫Ω=the integral of hemisphere Ω
+fr= BRDF
+ωi=incoming light direction 
+Li= radiance of a point at incoming light direction
+ 
+	
+radient flux (Φ): transmitted energy of a light source in watts. Wavelength determines color of light, meaning the energy
+emitted from a light source is a function of wavelength f(wl). The energy associated with this wavelength of the light
+source is radient flux.
+
+Solid angle (ω): area of a shape that has been projected onto the unit sphere. Say we're at the center of the sphere
+and we look out at a shap outside of it. The shadow casted onto the sphere is basically a projection of that shape onto
+the sphere, taking the area of that shadow is the solid angle.
+
+Radient intensity: The amount of radient flux per solid angle. Strength of the lightsource projected onto the unit
+sphere. Say we have an omnidirectional light, radient intensity gives us the the energy of that light given
+a specific area.
+
+	I = dΦ/ dω
+
+Radiance(L): Strngth of light coming from a single direction. The total observed energy in an area (A) over solid angle (w)
+of a light with radient intensity (p). Scaled by the angle of incidence of the light to the surface normal (t). Applying a 
+cos to it, adds what we've previously dont with light, the greater the angle, the less light hits the surface.
+
+	cos(θ) = dot(lightDir, normal)
+
+	L = (d^2(Φ) / (dAdω cos(θ)))
+
+
+Now, lets say A and w are infinitely small, we can them use the radience equation to to measure the flux (energy) of
+a single light ray hitting a fragment. So basically, w is just a vector, and A is a fragment.
+
+BRDF (bidirectional reflective distribution function): Function that determines how much each individual light ray incoming at direction ωi contributes to the final
+reflected light on an opaque surfave given its material properties. For a mirror, BRDF is 0 for all incoming
+light rays since it reflects, except for outgoing ray ωo, that return 1.0. In order for a BRDF to be physically based,
+it MUST follow the convervation of energy. Meaning the sum of the reflected outgoing rays must NEVER exceed the sum
+of the incoming rays.
+
+Cook-Torance BRDF: Common PBR BRDF function. 
+
+	fr = kd * flambert + ks * fcook-torance
+	
+kd= ratio of incoming light that gets REFRACTED
+ks= ratio of incoming light that gets REFLECTED
+
+flambert = diffuse part = Lambertian diffuse = 
+
+	albedo/π
+
+fcook-torance = specualr part = cook-torrance specular = 
+
+	DFG / 4(ωo⋅n)(ωi⋅n)
+
+
+D= normal Distribution function: approximates how aligned microfacets are to halfway vector, influenced by roughness 
+(this is where the magic of approximating mircofacets comes in)
+
+G = Geometry function: describes the self-shadowing of microfacets. When a surface is rough, microfacets can overshadow
+others, making reflection reduced
+
+F = Fresnel equation: Ratio of surface reflection at different surface angles
+
+4(ωo⋅n)(ωi⋅n) = normalization factor
+
+Unreal 4 uses: Trowbridge-Reitz GGX for D, the Fresnel-Schlick approximation for F, and the Smith's Schlick-GGX for G
+
+Trowbridge-Reitz GGX
+	NDFGGXTR(n,h,α)=α^2 / π((n⋅h)^2(α^2−1)+1)^2
+
+	h= halfway vector
+	α = roughness
+
+	This says what when roughness is low, the amount of microfacets that align with halfway vec, are in a small,
+	concentrated area, hence the specular highlight is small. As roughness goes up, the amount of microfacets that align
+	with halfway vec increases.
+
+
+Smith's Schlick-GGX
+
+	GSchlickGGX(n,v,k)=n⋅v / (n⋅v)(1−k)+k
+
+	n = normal
+	v = vector
+
+	k = remapping of α (roughness) based on whether geometry functoin is for direct or IBL lighing
+
+		kdirect=(α+1)^2 / 8
+		kIBL=α^2 / 2
+
+	Now this is the Schlick part. We need Smith's part. We need this becuase we need to account for
+	both view and light direction
+
+		G(n,v,l,k)=Gsub(n,v,k)Gsub(n,l,k)
+
+	Gsub = GSchlickGGX
+	l = light direction
+	v = view direction
+	n = normal
+	k = look above
+
+	The geometry function gives us a multiplier between 0-1. 1 measures no microfacet shadowing (white)
+	and 0 measures complete microfacet shadowing (black)
+
+
+Fresnel-Schlick approximation
+
+	FSchlick(h,v,F0)= F0+(1−F0)(1−(h⋅v))^5
+
+	F0: base reflectivity of the surface
+
+	All surfaces have a base reflectivity when looking stright at surface. But, when we look at different angles.
+	all reflections become more apparent compared to the the base reflectivity. This is called Fresnel. The equation
+ 	tells us that as we look at the surface from more grazing angles, the stronger the fresnel.
+
+	Fresnel doesnt work with metals, we have to modify stuff for metals. Hence, we often see a parameter
+	called metalness which tells how metallic a material is (look at blender and unity's material creator!).
+	We end up tinting base reflectivity by metalness.
+
+

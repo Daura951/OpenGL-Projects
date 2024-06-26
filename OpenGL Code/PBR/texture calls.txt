@@ -1,0 +1,20 @@
+    unsigned int albedo = loadTexture2D("../resources/textures/rusty_ribbed_metal/rusty-ribbed-metal_albedo.png");
+    unsigned int metallic = loadTexture2D("../resources/textures/rusty_ribbed_metal/rusty-ribbed-metal_metallic.png");
+    unsigned int roughness = loadTexture2D("../resources/textures/rusty_ribbed_metal/rusty-ribbed-metal_roughness.png");
+    unsigned int ao = loadTexture2D("../resources/textures/rusty_ribbed_metal/rusty-ribbed-metal_ao.png");
+    unsigned int normalMap = loadTexture2D("../resources/textures/rusty_ribbed_metal/rusty-ribbed-metal_normal-dx.png");
+
+
+    unsigned int albedo = loadTexture2D("../resources/textures/titanium/Titanium-Scuffed_basecolor.png");
+    unsigned int metallic = loadTexture2D("../resources/textures/titanium/Titanium-Scuffed_metallic.png");
+    unsigned int roughness = loadTexture2D("../resources/textures/titanium/Titanium-Scuffed_roughness.png");
+    unsigned int ao = loadTexture2D("../resources/textures/titanium/Titanium-Scuffed_ao.png");
+    unsigned int normalMap = loadTexture2D("../resources/textures/titanium/Titanium-Scuffed_normal.png");
+
+
+    unsigned int hdrMap = loadHdrImage("../resources/textures/814-hdri-skies-com.hdr");
+    unsigned int albedo = loadTexture2D("../resources/textures/dragon/albedo.jpeg");
+    unsigned int metallic = loadTexture2D("../resources/textures/dragon/metallic.jpg");
+    unsigned int roughness = loadTexture2D("../resources/textures/dragon/rough.jpeg");
+    unsigned int ao = loadTexture2D("../resources/textures/dragon/ao.jpeg");
+    unsigned int normalMap = loadTexture2D("../resources/textures/dragon/normal.jpeg");
