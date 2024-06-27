@@ -2,6 +2,10 @@
 
 <p>Hello! Here is a repo with some OpenGL projects I've worked on as I'm learning the API!</p>
 
+<h2>SSAO</h2>
+
+![ssao](https://github.com/Daura951/OpenGL-Projects/assets/56042228/effcd16a-62b1-478c-a018-b2be2f7d1c6a)
+
 <h2>PBR</h2>
 
 ![titanium dragon](https://github.com/Daura951/OpenGL-Projects/assets/56042228/e12f1afd-7597-4f78-9707-36ef9ccdc5a1)
