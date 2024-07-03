@@ -80,13 +80,13 @@ int main()
     glfwSetScrollCallback(window, scrollWheelCallback);
 
     //-----------Create and compile shaders-------------------------------
-    Shader pbrShader("../resources/shaders/IBL/vertex.vs", "../resources/shaders/IBL/fragment.fs");
-    Shader hdrMapShader("../resources/shaders/IBL/cubeVertex.vs", "../resources/shaders/IBL/cubeFragment.fs");
-    Shader skyBoxShader("../resources/shaders/IBL/skyboxVertex.vs", "../resources/shaders/IBL/skyboxFragment.fs");
-    Shader irradienceShader("../resources/shaders/IBL/skyboxVertex.vs", "../resources/shaders/IBL/irradienceFragment.fs");
-    Shader preFilterShader("../resources/shaders/IBL/skyboxVertex.vs", "../resources/shaders/IBL/preFilter.fs");
-    Shader brdfShader("../resources/shaders/IBL/brdf.vs", "../resources/shaders/IBL/brdf.fs");
-    Shader quadDebugShader("../resources/shaders/IBL/quadVertex.vs", "../resources/shaders/IBL/quadFragment.fs");
+    Shader pbrShader("../resources/shaders/IBL/vertex.vs", "../resources/shaders/IBL/fragment.fs"); //main PBR pipeline
+    Shader hdrMapShader("../resources/shaders/IBL/cubeVertex.vs", "../resources/shaders/IBL/cubeFragment.fs"); //wraps HDR map around a cube
+    Shader skyBoxShader("../resources/shaders/IBL/skyboxVertex.vs", "../resources/shaders/IBL/skyboxFragment.fs"); //creates a skybox and applies HDR and gamma correction to it
+    Shader irradienceShader("../resources/shaders/IBL/skyboxVertex.vs", "../resources/shaders/IBL/irradienceFragment.fs"); //creates an irradience map for diffuse lighting. Approximates diffuse integral
+    Shader preFilterShader("../resources/shaders/IBL/skyboxVertex.vs", "../resources/shaders/IBL/preFilter.fs"); //creates a preFileter map for the specular component of specular integral
+    Shader brdfShader("../resources/shaders/IBL/brdf.vs", "../resources/shaders/IBL/brdf.fs"); //creates a LUT for brdf integral
+    Shader quadDebugShader("../resources/shaders/IBL/quadVertex.vs", "../resources/shaders/IBL/quadFragment.fs"); //for debugging the above shaders
     //---------------------Texture Loading--------------------------------
     unsigned int hdrMap = loadHdrImage("../resources/textures/814-hdri-skies-com.hdr");
     unsigned int albedo = loadTexture2D("../resources/textures/titanium/Titanium-Scuffed_basecolor.png");
